@@ -16,5 +16,5 @@ export class User {
   level?: number
 
   @OneToMany(type => Order, order => order.user)
-  order_list?: Order
+  order_list?: Order[]
 }

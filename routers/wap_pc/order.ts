@@ -1,6 +1,6 @@
 import Router from 'koa-router'
 
-import OrderController from '../controllers/Order'
+import OrderController from '../../controllers/wap_pc/Order'
 
 const router = new Router()
 

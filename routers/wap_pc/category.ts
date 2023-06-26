@@ -1,6 +1,6 @@
 import Router from 'koa-router'
 
-import CategoryController from '../controllers/Category'
+import CategoryController from '../../controllers/wap_pc/Category'
 
 const router = new Router()
 

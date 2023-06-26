@@ -15,5 +15,5 @@ export class Order {
   user?: User
 
   @OneToMany(type => Order_Item, oi => oi.order_id)
-  order_item_list?: Order_Item
+  order_item_list?: Order_Item[]
 }

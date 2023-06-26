@@ -11,7 +11,7 @@ export class Order_Item {
   goods_id?: number
 
   @Column()
-  amount?: number
+  num?: number
 
   @Column()
   order_id?: number

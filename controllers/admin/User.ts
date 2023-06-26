@@ -1,4 +1,7 @@
 import { AppDataSource } from "../../data-source"
+
+import utils from '../../utils'
+
 import { User } from '../../models/User'
 
 export default class UserController {
@@ -6,7 +9,7 @@ export default class UserController {
     const { username, password } = ctx.request.body
     const repository = AppDataSource.getRepository(User)
     const user = await repository.findOneBy({ username, password })
-    ctx.body = user
+    ctx.body = utils.respond({ data: user })
   }
 
   async signout(ctx) {

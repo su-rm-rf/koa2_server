@@ -18,6 +18,12 @@ export class Goods {
   price?: number
 
   @Column()
+  bill?: string
+
+  @Column()
+  unit?: string
+
+  @Column()
   category_id?: number
 
   // @Column({
