@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 import { Order } from "./Order"
 
 @Entity()
@@ -17,4 +17,14 @@ export class User {
 
   @OneToMany(type => Order, order => order.user)
   order_list?: Order[]
+
+  @CreateDateColumn()
+  created_at?: Date
+
+  @UpdateDateColumn()
+  updated_at?: Date
+
+  @Column({ default: () => 0 })
+  delete_flag?: number
+  
 }

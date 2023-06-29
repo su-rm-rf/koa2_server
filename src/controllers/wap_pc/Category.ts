@@ -1,3 +1,4 @@
+import { redisClient } from './../../_redis'
 import { AppDataSource } from "../../data-source"
 
 import utils from '../../utils'
@@ -12,8 +13,21 @@ const goodsRepo = AppDataSource.getRepository(Goods)
 
 export default class CategoryController {
   async list (ctx) {
-    const list = await categoryRepo.find({ relations: ['goods_list'] })
-    ctx.body = utils.respond({ data: list })
+    const categoryQuery = await categoryRepo.createQueryBuilder('category')
+    let arr:any = await redisClient.get('category_list')
+    if (!arr) {
+      arr = await categoryQuery
+        .leftJoinAndSelect('category.goods_list', 'goods')
+        .where('category.id = goods.category_id')
+        .take(10)
+        .getManyAndCount()
+      // const list = await categoryRepo.find({ relations: ['goods_list'] })
+      await redisClient.set('category_list', JSON.stringify(arr))
+      await redisClient.expire('category_list', 20)
+    } else {
+      arr = JSON.parse(arr)
+    }
+    ctx.body = utils.respond({ data: arr[0] })
   }
   
   async detail (ctx) {

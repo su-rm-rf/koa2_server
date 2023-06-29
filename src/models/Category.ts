@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm"
+import { Column, CreateDateColumn, Entity, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 
 import { Goods } from './Goods'
 
@@ -18,5 +18,14 @@ export class Category {
 
   @OneToMany(type => Goods, goods => goods.category)
   goods_list?: Goods[]
+
+  @CreateDateColumn()
+  created_at?: Date
+
+  @UpdateDateColumn()
+  updated_at?: Date
+
+  @Column({ default: () => 0 })
+  delete_flag?: number
 
 }

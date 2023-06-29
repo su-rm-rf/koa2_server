@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm"
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 
 import { Category } from './Category'
 import { Order_Item } from "./Order_Item"
@@ -40,5 +40,14 @@ export class Goods {
 
   @ManyToMany(type => Order_Item, oi => oi.goods)
   order_item?: Order_Item
+
+  @CreateDateColumn()
+  created_at?: Date
+
+  @UpdateDateColumn()
+  updated_at?: Date
+
+  @Column({ default: () => 0 })
+  delete_flag?: number
 
 }

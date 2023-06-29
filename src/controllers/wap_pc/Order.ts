@@ -1,4 +1,5 @@
 import { AppDataSource } from "../../data-source"
+import moment from "moment"
 
 import utils from '../../utils'
 
@@ -18,6 +19,7 @@ export default class CategoryController {
     const orders = await orderRepo.findBy({ user_id: token.id })
     
     let orderList:any = []
+    const format = 'YYYY-MM-DD hh:mm:ss'
     // 遍历数据库中的订单列表
     await Promise.all(orders.map(async (order:Order) => {
       const ois:any = await orderItemRepo.findBy({ order_id: order.id })
@@ -31,6 +33,8 @@ export default class CategoryController {
           ...goods,
           num: oi.num,
           amount: goods.price * Number(oi.num),
+          created_at: moment(goods.created_at).format(format),
+          updated_at: moment(goods.updated_at).format(format),
         })
       }))
 
@@ -40,14 +44,20 @@ export default class CategoryController {
         totalAmount += goods.amount
       })
 
-      const orderDto:OrderDTO = {
-        id: Number(order.id),
+      // const orderDto:OrderDTO = {
+      const orderDto = {
+        ...order,
+        id: String(order.id).padStart(10, '0'),
         goods: goodsList,
         bill: '元',
         totalAmount,
+        created_at: moment(order.created_at).format(format),
+        updated_at: moment(order.updated_at).format(format),
       }
       orderList.push(orderDto)
     }))
+
+    orderList.sort((m, n) => n.id - m.id)
     
     ctx.body = utils.respond({ data: orderList })
   }

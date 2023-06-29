@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 import { Order_Item } from "./Order_Item"
 import { User } from "./User"
 
@@ -16,4 +16,14 @@ export class Order {
 
   @OneToMany(type => Order_Item, oi => oi.order_id)
   order_item_list?: Order_Item[]
+
+  @CreateDateColumn()
+  created_at?: Date
+
+  @UpdateDateColumn()
+  updated_at?: Date
+
+  @Column({ default: () => 0 })
+  delete_flag?: number
+  
 }

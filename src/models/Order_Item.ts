@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 import { Goods } from "./Goods"
 import { Order } from "./Order"
 
@@ -24,4 +24,14 @@ export class Order_Item {
   @JoinTable()
   @JoinColumn({ name: 'goods_id' })
   goods?: Goods
+
+  @CreateDateColumn()
+  created_at?: Date
+
+  @UpdateDateColumn()
+  updated_at?: Date
+
+  @Column({ default: () => 0 })
+  delete_flag?: number
+  
 }
