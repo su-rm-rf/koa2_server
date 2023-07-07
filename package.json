@@ -15,15 +15,19 @@
   "dependencies": {
     "cross-env": "^7.0.3",
     "dotenv": "^16.1.4",
+    "jsonwebtoken": "^9.0.0",
     "koa": "^2.14.2",
     "koa-body": "^6.0.1",
+    "koa-jwt": "^4.0.4",
     "koa-router": "^12.0.0",
     "koa2-cors": "^2.0.6",
+    "koa2-swagger-ui": "^5.8.0",
     "moment": "^2.29.4",
     "mongodb": "^5.6.0",
     "mysql": "^2.18.1",
     "redis": "^4.0.6",
     "reflect-metadata": "^0.1.13",
+    "swagger-jsdoc": "^6.2.8",
     "typeorm": "^0.3.16"
   },
   "devDependencies": {
