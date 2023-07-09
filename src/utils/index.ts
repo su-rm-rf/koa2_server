@@ -5,5 +5,6 @@ export default {
       errMsg: props.errMsg || 'ok',
       data: props.data || null,
     }
-  }
+  },
+  
 }

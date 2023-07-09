@@ -1,13 +1,13 @@
-import { AppDataSource } from "../../data-source"
 import moment from "moment"
 
+import { AppDataSource } from "../../data-source"
 import utils from '../../utils'
+import auth from '../../utils/auth'
 
 import { Goods } from '../../models/Goods'
 import { Order } from '../../models/Order'
 import { Order_Item } from '../../models/Order_Item'
-
-import OrderDTO from '../../dto/Order'
+import { errorType } from "../../constants"
 
 const orderRepo = AppDataSource.getRepository(Order)
 const orderItemRepo = AppDataSource.getRepository(Order_Item)
@@ -15,9 +15,9 @@ const goodsRepo = AppDataSource.getRepository(Goods)
 
 export default class CategoryController {
   async list (ctx) {
-    const token = JSON.parse(ctx.cookies.get('token'))
-    const orders = await orderRepo.findBy({ user_id: token.id })
+    const token: any = await auth.verify(ctx)
     
+    const orders = await orderRepo.findBy({ user_id: token.id })
     let orderList:any = []
     const format = 'YYYY-MM-DD hh:mm:ss'
     // 遍历数据库中的订单列表
@@ -67,14 +67,13 @@ export default class CategoryController {
   
   async add (ctx) {
     const { goods_id, num } = ctx.request.body
-    let token = ctx.cookies.get('token')
+    const token: any = await auth.verify(ctx)
     if (token) {
-      token = JSON.parse(token)
       const oi1 = await orderRepo.save({ user_id: token.id })
       const oi2 = await orderItemRepo.save({ goods_id, num, order_id: oi1.id })
       ctx.body = utils.respond({ data: oi2 })
     } else {
-      ctx.body = utils.respond({ errMsg: 'need signin' })
+      ctx.body = utils.respond({ errMsg: errorType.SIGNIN_IS_REQUIRED })
     }
   }
 

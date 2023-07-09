@@ -1,6 +1,6 @@
 import Router from 'koa-router'
 
-import CategoryController from '../../controllers/admin/Category'
+import CategoryController from '../../controllers/admin/CategoryController'
 
 const router = new Router()
 

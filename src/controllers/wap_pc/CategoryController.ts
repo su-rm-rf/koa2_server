@@ -1,7 +1,7 @@
-import { redisClient } from './../../_redis'
 import { AppDataSource } from "../../data-source"
 
 import utils from '../../utils'
+import { redisClient } from '../../utils/redis'
 
 import { Category } from '../../models/Category'
 import { Goods } from '../../models/Goods'

@@ -1,5 +1,6 @@
+const env:any = process.env.BASE_ENV
 require('dotenv').config({
-  path: `.env.${ process.env.BASE_ENV }`
+  path: `env/.${ env }.env`
 })
 
 import "reflect-metadata"
