@@ -18,4 +18,12 @@ export default class CategoryController {
     const detail = await repository.findOneBy({ id })
     ctx.body = detail
   }
+
+  async add(ctx) {
+    const token = ctx.header.authorization
+  }
+
+  async delete(ctx) {
+
+  }
 }

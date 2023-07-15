@@ -1,3 +1,4 @@
+import { redisClient } from './../utils/redis';
 import utils from '../utils'
 import { errorType } from '../constants'
 
@@ -12,6 +13,7 @@ export default class UserController {
     const user: User | null = await userService.getUserInfo(username, password)
     if (!user) {
       ctx.body = utils.respond({ errMsg: errorType.USERNAME_OR_PASSWORD_IS_INCORRECT })
+      ctx.throw(errorType.USERNAME_OR_PASSWORD_IS_INCORRECT)
     } else {
       const token: string = await userService.signin(user)
       ctx.body = utils.respond({ data: { token: `Bearer ${token}` } })
@@ -19,6 +21,12 @@ export default class UserController {
   }
 
   async signout(ctx) {
+    await userService.signout(ctx)
+    ctx.body = utils.respond({ data: null })
+  }
 
+  async info(ctx) {
+    const { token } = ctx.params
+    const payload = await userService.info(ctx, token)
   }
 }

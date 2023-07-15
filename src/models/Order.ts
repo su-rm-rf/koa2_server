@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 import { Order_Item } from "./Order_Item"
 import { User } from "./User"
 
@@ -22,6 +22,9 @@ export class Order {
 
   @UpdateDateColumn()
   updated_at?: Date
+
+  @DeleteDateColumn()
+  deleted_at?: Date
 
   @Column({ default: () => 0 })
   delete_flag?: number

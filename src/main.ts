@@ -11,6 +11,7 @@ import { koaSwagger } from 'koa2-swagger-ui'
 import { AppDataSource } from './data-source'
 import { redisClient } from './utils/redis'
 import routers from './routers'
+import auth from './middlewares/auth'
 import { whiteList } from './configs/settings'
 
 const server = new Koa()
@@ -30,9 +31,10 @@ server.use(Cors({
   },
   credentials: true,
   allowMethods: ['GET', 'POST'],
-  allowHeaders: ['Content-Type', 'Authorization', 'token'],
+  allowHeaders: ['Content-Type', 'token'],
 }))
 server.use(Body())
+// server.use(auth())
 server.use(koaSwagger({
   routePrefix: '/swagger',
   swaggerOptions: {
@@ -50,4 +52,9 @@ AppDataSource.initialize().then(() => {
 
 server.listen(PORT, () => {
   console.log(`🚀 server started at http://localhost:${PORT}`)
+})
+
+server.on('error', (err, ctx) => {
+  // 监听错误
+  console.error('server error:', err)
 })

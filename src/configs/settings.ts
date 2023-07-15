@@ -17,3 +17,4 @@ export const whiteList = {
 }
 export const privateKey = fs.readFileSync(path.resolve(__dirname, '../../keys/private.key'))
 export const publicKey = fs.readFileSync(path.resolve(__dirname, '../../keys/public.key'))
+export const redisPrefx = 'sys:user:token:'

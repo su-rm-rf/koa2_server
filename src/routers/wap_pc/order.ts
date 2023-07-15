@@ -1,5 +1,7 @@
 import Router from 'koa-router'
 
+import auth from '../../middlewares/auth'
+
 import OrderController from '../../controllers/wap_pc/OrderController'
 
 const router = new Router()
@@ -21,8 +23,8 @@ const {
  *      200:
  *        description: return an order list
  */
-router.get('/list', order_list)
-.get('/detail/:id', order_detail)
+router.get('/list', auth(), order_list)
+.get('/detail/:id', auth(), order_detail)
 /**
  * @openapi
  * /wap_pc/order/add:
@@ -32,8 +34,8 @@ router.get('/list', order_list)
  *      200:
  *        description: return add result
  */
-.post('/add', order_add)
-.post('/update', order_update)
-.post('/delete', order_delete)
+.post('/add', auth(), order_add)
+.post('/update', auth(), order_update)
+.post('/delete', auth(), order_delete)
 
 export default router

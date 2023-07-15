@@ -15,9 +15,16 @@ const goodsRepo = AppDataSource.getRepository(Goods)
 
 export default class CategoryController {
   async list (ctx) {
-    const token: any = await auth.verify(ctx)
-    
-    const orders = await orderRepo.findBy({ user_id: token.id })
+    // const token: any = await auth.verify(ctx)
+
+    // console.log('token', token)
+
+    // if (!token) {
+    //   ctx.body = utils.respond({ errCode: 10031, errMsg: errorType.Token_Expired_Error, data: [] })
+    //   return;
+    // }
+
+    const orders = await orderRepo.findBy({ user_id: ctx.userInfo.id })
     let orderList:any = []
     const format = 'YYYY-MM-DD hh:mm:ss'
     // 遍历数据库中的订单列表
@@ -74,6 +81,7 @@ export default class CategoryController {
       ctx.body = utils.respond({ data: oi2 })
     } else {
       ctx.body = utils.respond({ errMsg: errorType.SIGNIN_IS_REQUIRED })
+      ctx.throw(errorType.SIGNIN_IS_REQUIRED)
     }
   }
 

@@ -8,15 +8,18 @@ export default {
     return await jwt.sign(payload, privateKey, options)
   },
   
-  async verify(ctx) {
+  async verify(ctx, token?) {
     try {
-      const token = ctx.header.authorization.replace('Bearer ', '')
+      token = token ?? ctx.header.token.replace('Bearer ', '')
       const payload = await jwt.verify(token, publicKey)
       return payload
     } catch(err) {
-      console.error('jwt verify error:', err)
       return ''
     }
   },
+
+  async refresh() {
+
+  }
 
 }

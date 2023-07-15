@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 
 import { Category } from './Category'
 import { Order_Item } from "./Order_Item"
@@ -46,6 +46,9 @@ export class Goods {
 
   @UpdateDateColumn()
   updated_at?: Date
+
+  @DeleteDateColumn()
+  deleted_at?: Date
 
   @Column({ default: () => 0 })
   delete_flag?: number
