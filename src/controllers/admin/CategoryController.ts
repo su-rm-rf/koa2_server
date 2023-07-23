@@ -1,3 +1,4 @@
+import utils from "../../utils"
 import { AppDataSource } from "../../data-source"
 
 import { Category } from "../../models/Category"
@@ -7,8 +8,8 @@ export default class CategoryController {
   async list(ctx) {
     const repository = AppDataSource.getRepository(Category)
     const list = await repository.find({ relations: ['goods_list'] })
-    ctx.cookies.set('track', list.length)
-    ctx.body = list
+    // ctx.cookies.set('track', list.length)
+    utils.respond(ctx, { data: list })
   }
   
   async detail(ctx) {
@@ -16,7 +17,7 @@ export default class CategoryController {
     const repository = AppDataSource.getRepository(Goods)
   
     const detail = await repository.findOneBy({ id })
-    ctx.body = detail
+    utils.respond(ctx, { data: detail })
   }
 
   async add(ctx) {

@@ -12,17 +12,17 @@ export default class UserController {
     const { username, password } = ctx.request.body
     const user: User | null = await userService.getUserInfo(username, password)
     if (!user) {
-      ctx.body = utils.respond({ errMsg: errorType.USERNAME_OR_PASSWORD_IS_INCORRECT })
+      utils.respond(ctx, { errMsg: errorType.USERNAME_OR_PASSWORD_IS_INCORRECT })
       ctx.throw(errorType.USERNAME_OR_PASSWORD_IS_INCORRECT)
     } else {
       const token: string = await userService.signin(user)
-      ctx.body = utils.respond({ data: { token: `Bearer ${token}` } })
+      utils.respond(ctx, { data: { token: `Bearer ${token}` } })
     }
   }
 
   async signout(ctx) {
     await userService.signout(ctx)
-    ctx.body = utils.respond({ data: null })
+    utils.respond(ctx, { data: null })
   }
 
   async info(ctx) {

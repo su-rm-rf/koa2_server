@@ -66,7 +66,7 @@ export default class CategoryController {
 
     orderList.sort((m, n) => n.id - m.id)
     
-    ctx.body = utils.respond({ data: orderList })
+    utils.respond(ctx, { data: orderList })
   }
   
   async detail (ctx) {
@@ -78,9 +78,9 @@ export default class CategoryController {
     if (token) {
       const oi1 = await orderRepo.save({ user_id: token.id })
       const oi2 = await orderItemRepo.save({ goods_id, num, order_id: oi1.id })
-      ctx.body = utils.respond({ data: oi2 })
+      utils.respond(ctx, { data: oi2 })
     } else {
-      ctx.body = utils.respond({ errMsg: errorType.SIGNIN_IS_REQUIRED })
+      utils.respond(ctx, { errMsg: errorType.SIGNIN_IS_REQUIRED })
       ctx.throw(errorType.SIGNIN_IS_REQUIRED)
     }
   }

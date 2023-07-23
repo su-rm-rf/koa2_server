@@ -27,7 +27,7 @@ export default class CategoryController {
     } else {
       arr = JSON.parse(arr)
     }
-    ctx.body = utils.respond({ data: arr[0] })
+    utils.respond(ctx, { data: arr[0] })
   }
   
   async detail (ctx) {
@@ -39,7 +39,7 @@ export default class CategoryController {
       ...detail,
       category_name: category.name
     }
-    ctx.body = utils.respond({ data: GoodsDto })
+    utils.respond(ctx, { data: GoodsDto })
   }
 
   async add (ctx) {
