@@ -34,7 +34,7 @@ server.use(Cors({
   allowHeaders: ['Content-Type', 'token'],
 }))
 server.use(Body())
-// server.use(auth())
+server.use(auth())
 server.use(koaSwagger({
   routePrefix: '/swagger',
   swaggerOptions: {

@@ -1,6 +1,6 @@
-import { redisClient } from './../utils/redis';
 import utils from '../utils'
-import { errorType } from '../constants'
+import { authError } from '../constants'
+import auth from '../utils/auth'
 
 import UserService from '../services/UserService'
 import { User } from '../models/User'
@@ -12,8 +12,7 @@ export default class UserController {
     const { username, password } = ctx.request.body
     const user: User | null = await userService.getUserInfo(username, password)
     if (!user) {
-      utils.respond(ctx, { errMsg: errorType.USERNAME_OR_PASSWORD_IS_INCORRECT })
-      ctx.throw(errorType.USERNAME_OR_PASSWORD_IS_INCORRECT)
+      utils.respond(ctx, { errMsg: authError[10039], errCode: 10039 })
     } else {
       const token: string = await userService.signin(user)
       utils.respond(ctx, { data: { token: `Bearer ${token}` } })
@@ -27,6 +26,13 @@ export default class UserController {
 
   async info(ctx) {
     const { token } = ctx.params
-    const payload = await userService.info(ctx, token)
+    const payload = await auth.verify(ctx, token)
+    console.log(token, payload)
+    if (!payload) {
+      utils.respond(ctx, { errMsg: authError[10031], errCode: 10031 })
+    } else {
+      const token2 = await userService.signin(payload)
+      utils.respond(ctx, { data: { token: `Bearer ${token2}` } })
+    }
   }
 }

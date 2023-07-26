@@ -4,8 +4,12 @@ import { privateKey, publicKey } from '../configs/settings'
 
 export default {
 
-  async sign(payload, options) {
-    return await jwt.sign(payload, privateKey, options)
+  async sign(payload, options?) {
+    return await jwt.sign(payload, privateKey, options || {
+      algorithm: 'RS256',
+      // algorithm: user.password,
+      expiresIn: 60 * 1,
+    })
   },
   
   async verify(ctx, token?) {

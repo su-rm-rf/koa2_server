@@ -7,7 +7,7 @@ import auth from '../../utils/auth'
 import { Goods } from '../../models/Goods'
 import { Order } from '../../models/Order'
 import { Order_Item } from '../../models/Order_Item'
-import { errorType } from "../../constants"
+import { authError } from "../../constants"
 
 const orderRepo = AppDataSource.getRepository(Order)
 const orderItemRepo = AppDataSource.getRepository(Order_Item)
@@ -15,15 +15,6 @@ const goodsRepo = AppDataSource.getRepository(Goods)
 
 export default class CategoryController {
   async list (ctx) {
-    // const token: any = await auth.verify(ctx)
-
-    // console.log('token', token)
-
-    // if (!token) {
-    //   ctx.body = utils.respond({ errCode: 10031, errMsg: errorType.Token_Expired_Error, data: [] })
-    //   return;
-    // }
-
     const orders = await orderRepo.findBy({ user_id: ctx.userInfo.id })
     let orderList:any = []
     const format = 'YYYY-MM-DD hh:mm:ss'
@@ -80,8 +71,7 @@ export default class CategoryController {
       const oi2 = await orderItemRepo.save({ goods_id, num, order_id: oi1.id })
       utils.respond(ctx, { data: oi2 })
     } else {
-      utils.respond(ctx, { errMsg: errorType.SIGNIN_IS_REQUIRED })
-      ctx.throw(errorType.SIGNIN_IS_REQUIRED)
+      utils.respond(ctx, { errMsg: authError[10031], errCode: 10031 })
     }
   }
 

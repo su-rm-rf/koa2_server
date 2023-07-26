@@ -1,4 +1,4 @@
-import { errorType } from "../constants"
+import { authError } from "../constants"
 import { redisClient } from './../utils/redis'
 import auth from "../utils/auth"
 import UserService from "../services/UserService"
@@ -10,7 +10,7 @@ export default () => {
 
     // header中的token为空
     if (!token) { 
-      await next(errorType.USERNAME_OR_PASSWORD_IS_INCORRECT)
+      await next(authError[10039])
       return;
     }
 
@@ -20,7 +20,7 @@ export default () => {
     // console.log('tokenValue', tokenValue)
     // 若redis中不存在，说明登录状态已超时
     if (!tokenValue) {
-      await next(errorType.SIGNIN_IS_REQUIRED)
+      await next(authError[10031])
       return;
     }
     
